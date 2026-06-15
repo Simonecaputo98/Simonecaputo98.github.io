@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,12 +40,6 @@
   }
 
   /* LIQUID ANIMATIONS */
-  @keyframes morphShape {
-    0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-    100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  }
-
   @keyframes gradientFlow {
     0%   { background-position: 0% 50%; }
     50%  { background-position: 100% 50%; }
@@ -168,23 +162,37 @@
     opacity: 0.8;
   }
 
-  /* VETRO CHE SI DEFORMA E SEGUE IL MOUSE */
-  .hero-blob-glass {
+  /* EFFETTO LIQUIDO AVANZATO - STILI CSS */
+  #gooey-wrapper {
     position: absolute;
-    width: 90%;
-    height: 90%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.05), inset 0 0 20px rgba(255,255,255,0.4);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2; /* Sopra i colori ma sotto l'interfaccia */
     
-    /* Deformazione fluida del vetro */
-    animation: morphShape 8s ease-in-out infinite;
-    
-    /* Transizione per rendere il movimento del mouse morbidissimo */
-    transition: transform 0.8s cubic-bezier(0.1, 1, 0.3, 1);
+    /* Applica il filtro SVG per fusione e aberrazione cromatica */
+    filter: url(#advancedLiquidEffect);
+    /* Crea la rifrazione generale */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
+
+  .gooey-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    /* Bianco semi-trasparente per simulare il volume del fluido */
+    background: rgba(255, 255, 255, 0.7);
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  #blob1 { width: 60%; aspect-ratio: 1/1; }
+  #blob2 { width: 40%; aspect-ratio: 1/1; }
+  #blob3 { width: 25%; aspect-ratio: 1/1; }
 
   /* SCROLL ARROW */
   .scroll-down {
@@ -317,7 +325,35 @@
     
     <div class="hero-blob-wrapper">
       <div class="hero-blob-colors"></div>
-      <div class="hero-blob-glass" id="glassBlob"></div>
+      
+      <div id="gooey-wrapper">
+        <div class="gooey-blob" id="blob1"></div>
+        <div class="gooey-blob" id="blob2"></div>
+        <div class="gooey-blob" id="blob3"></div>
+      </div>
+
+      <svg width="0" height="0" style="position: absolute; visibility: hidden;">
+        <filter id="advancedLiquidEffect">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blurredBlobs"/>
+          
+          <feColorMatrix in="blurredBlobs" type="matrix" values="
+            1  0  0  0   0
+            0  1  0  0   0
+            0  0  1  0   0
+            0  0  0  30  -15" result="gooeyFusion"/>
+          
+          <feColorMatrix type="matrix" values="
+            1.2  0    0   0   -5
+            0    1    0   0   -5
+            0    0    1.2 0   -5
+            0    0    0   1   0" result="fringedGooey"/>
+            
+          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="1" result="distortionNoise">
+            <animate attributeName="baseFrequency" values="0.02;0.025;0.02" dur="10s" repeatCount="indefinite" />
+          </feTurbulence>
+          <feDisplacementMap in="fringedGooey" in2="distortionNoise" scale="25" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </svg>
     </div>
     
     <a href="#projects" class="scroll-down">&darr;</a>
@@ -366,7 +402,7 @@
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const menuOverlay = document.getElementById('menuOverlay');
     const spans = hamburgerBtn.querySelectorAll('span');
-    const menuLinks = document.querySelectorAll('.menu-link'); // Ora seleziona i link
+    const menuLinks = document.querySelectorAll('.menu-link');
 
     function toggleMenu() {
       menuOverlay.classList.toggle('active');
@@ -383,7 +419,6 @@
 
     hamburgerBtn.addEventListener('click', toggleMenu);
 
-    // Fa chiudere il menu in automatico quando clicchi una voce
     menuLinks.forEach(link => {
       link.addEventListener('click', () => {
         if(menuOverlay.classList.contains('active')) {
@@ -392,14 +427,53 @@
       });
     });
 
-    // 2. LOGICA MOVIMENTO MOUSE (Solo per il vetro)
-    const glassBlob = document.getElementById('glassBlob');
+    // 2. LOGICA MOVIMENTO MULTIPLO EFFETTO LIQUIDO
+    const gooeyWrapper = document.getElementById('gooey-wrapper');
+    const blobs = document.querySelectorAll('.gooey-blob');
+    
+    // Inizializza posizioni
+    const mouse = { x: 0, y: 0 };
+    let coreX = 0, coreY = 0;
+    let targetX = 0, targetY = 0;
     
     document.addEventListener('mousemove', (e) => {
-      const xAxis = (window.innerWidth / 2 - e.pageX) / 10;
-      const yAxis = (window.innerHeight / 2 - e.pageY) / 10;
-      glassBlob.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
+      // Effetto di parallasse inverso morbido come avevamo prima
+      targetX = (window.innerWidth / 2 - e.pageX) / 8;
+      targetY = (window.innerHeight / 2 - e.pageY) / 8;
     });
+    
+    // Funzione per ritardo organico
+    function organicLag(current, target, rate = 0.1) {
+      return current + (target - current) * rate;
+    }
+    
+    function updateLiquid() {
+      // Il nucleo centrale insegue il mouse
+      coreX = organicLag(coreX, targetX, 0.08);
+      coreY = organicLag(coreY, targetY, 0.08);
+      
+      // I singoli blob si muovono attorno al nucleo con ritardi e scale diverse
+      blobs.forEach((blob, index) => {
+        const lagRate = 0.04 + index * 0.015;
+        blob.posX = organicLag(blob.posX || 0, coreX, lagRate);
+        blob.posY = organicLag(blob.posY || 0, coreY, lagRate);
+        
+        const scaleRate = 0.01 + index * 0.005;
+        const targetScale = 1 + index * 0.15;
+        blob.currentScale = organicLag(blob.currentScale || 1, targetScale, scaleRate);
+        
+        // Traduciamo i valori in posizioni CSS (partendo dal centro -50%, -50%)
+        // Moltiplichiamo il movimento di ogni blob per creare separazione
+        const offsetX = (blob.posX - coreX) * (1.5 + index);
+        const offsetY = (blob.posY - coreY) * (1.5 + index);
+        
+        blob.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${blob.currentScale})`;
+      });
+      
+      requestAnimationFrame(updateLiquid);
+    }
+    
+    updateLiquid();
   </script>
 </body>
 </html>
