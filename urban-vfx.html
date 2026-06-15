@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Integrations - Simone Caputo</title>
+<style>
+  /* RESET & BASE STYLES */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    width: 100%;
+    background-color: #ffffff;
+    color: #111111;
+    font-family: "Futura", "Trebuchet MS", "Century Gothic", sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* TYPOGRAPHY */
+  h1, h2, h3, .menu-link {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    position: relative;
+    z-index: 10;
+  }
+
+  p {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333333;
+    max-width: 800px;
+  }
+
+  /* HEADER & MENU */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 60%, rgba(255,255,255,0));
+    pointer-events: none;
+  }
+
+  .title-group, .hamburger {
+    pointer-events: auto;
+  }
+
+  .title-group h1 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  /* BACK LINK */
+  .back-link {
+    text-decoration: none;
+    color: #111111;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  .back-link:hover {
+    transform: translateX(-10px);
+  }
+
+  .hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 5px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 45px;
+    height: 5px;
+    background-color: #111111;
+    transition: all 0.3s ease;
+  }
+
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 10vw;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
+  }
+
+  .menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu-link {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #111111;
+    text-decoration: none;
+    margin: 15px 0;
+    transition: transform 0.4s ease;
+  }
+
+  /* LIQUID HOVER EFFECT */
+  @keyframes gradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .liquid-hover-effect:hover {
+    transform: translateX(30px);
+    background: linear-gradient(90deg, #00d4ff, #ff00ff, #ff5e00, #00d4ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 3s ease infinite;
+  }
+
+  /* PROJECT HEADER */
+  .project-header {
+    padding: 180px 5vw 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .project-meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .project-title-large {
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.9;
+  }
+
+  /* PROJECT GALLERY (VERTICAL VIDEOS OPTIMIZED) */
+  .project-gallery {
+    padding: 20px 5vw 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  /* Nuova Griglia a 3 colonne per video verticali */
+  .gallery-row.vertical-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  /* Contenitori Verticali (9:16) */
+  .video-container {
+    width: 100%;
+    aspect-ratio: 9 / 16; /* FORMATO 1080x1920 */
+    background-color: #f4f4f4;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .video-container iframe, .video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .placeholder-text {
+    font-family: "JetBrains Mono", monospace;
+    color: #888888;
+    text-align: center;
+    padding: 20px;
+    z-index: 1;
+    font-size: 0.9rem;
+  }
+
+  /* PROJECT DESCRIPTION */
+  .project-description-section {
+    padding: 20px 5vw 120px;
+    border-top: 1px solid #eeeeee;
+    margin-top: 20px;
+  }
+
+  .project-description {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .desc-title {
+    font-size: 2rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .gallery-row.vertical-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 colonne su tablet */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .project-description {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .gallery-row.vertical-grid {
+      grid-template-columns: 1fr; /* 1 colonna su smartphone */
+    }
+    .project-meta {
+      gap: 20px;
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="title-group">
+      <a href="index.html" class="back-link">
+        <h1>&larr; SIMONE CAPUTO</h1>
+      </a>
+    </div>
+    
+    <div class="hamburger" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <nav class="menu-overlay" id="menuOverlay">
+    <a href="index.html" class="menu-link liquid-hover-effect">HOME</a>
+    <a href="index.html#projects" class="menu-link liquid-hover-effect">PORTFOLIO</a>
+    <a href="about.html" class="menu-link liquid-hover-effect">PROFILE</a>
+    <a href="contact.html" class="menu-link liquid-hover-effect">CONTACT</a>
+  </nav>
+
+  <section class="project-header">
+    <div class="project-meta">
+      <span>VFX / FOOH / CGI</span>
+      <span>Worldwide &mdash; 2026</span>
+      <span>Blender / After Effects / Premiere Pro</span>
+    </div>
+    <h2 class="project-title-large">URBAN<br>INTEGRATIONS</h2>
+  </section>
+
+  <section class="project-gallery">
+    
+    <div class="gallery-row vertical-grid">
+      
+      <div class="video-container">
+        <div class="placeholder-text">PASTE VIMEO EMBED CODE HERE<br>(Vertical Reel 1)</div>
+      </div>
+      
+      <div class="video-container">
+        <div class="placeholder-text">PASTE VIMEO EMBED CODE HERE<br>(Vertical Reel 2)</div>
+      </div>
+
+      <div class="video-container">
+        <div class="placeholder-text">PASTE VIMEO EMBED CODE HERE<br>(Vertical Reel 3)</div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="project-description-section">
+    <div class="project-description">
+      <h3 class="desc-title">DIGITAL<br>CRAFT</h3>
+      <p>
+        A series of Fake Out of Home (FOOH) advertising concepts exploring the boundaries between architectural structures and digital content. By combining real-world video assets with complex 3D tracking data, these interventions integrate large-scale CGI retail products into heritage and dynamic urban scenarios. The technical workflow involves high-precision matchmoving, realistic environment lighting reproduction, and material mapping within Blender, followed by professional compositing and color grading inside Adobe After Effects to guarantee flawless visual integration.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const spans = hamburgerBtn.querySelectorAll('span');
+
+    function toggleMenu() {
+      menuOverlay.classList.toggle('active');
+      if (menuOverlay.classList.contains('active')) {
+        spans[0].style.transform = 'translateY(13px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-13px) rotate(-45deg)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    }
+
+    hamburgerBtn.addEventListener('click', toggleMenu);
+  </script>
+</body>
+</html>

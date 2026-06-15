@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simone Caputo - Architectural & 3D Designer</title>
+<style>
+  /* RESET & BASE STYLES */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    width: 100%;
+    background-color: #ffffff;
+    color: #111111;
+    font-family: "Futura", "Trebuchet MS", "Century Gothic", sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  /* TYPOGRAPHY */
+  h1, h2, .menu-link, .project-title {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    position: relative;
+    z-index: 10;
+  }
+
+  p {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333333;
+  }
+
+  /* LIQUID ANIMATIONS */
+  @keyframes morphShape {
+    0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  }
+
+  @keyframes gradientFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 60%, rgba(255,255,255,0));
+    pointer-events: none;
+  }
+
+  .title-group {
+    pointer-events: auto;
+  }
+
+  .title-group h1 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  /* HAMBURGER MENU */
+  .hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 102;
+    margin-top: 5px;
+    pointer-events: auto;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 45px;
+    height: 5px;
+    background-color: #111111;
+    transition: all 0.3s ease;
+  }
+
+  /* FULL SCREEN MENU OVERLAY */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 10vw;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
+  }
+
+  .menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* HOVER LIQUIDO SUI TESTI */
+  .menu-link {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #111111;
+    text-decoration: none;
+    margin: 15px 0;
+    transition: transform 0.4s ease;
+  }
+
+  .liquid-hover-effect:hover {
+    transform: translateX(30px);
+    background: linear-gradient(90deg, #00d4ff, #ff00ff, #ff5e00, #00d4ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 3s ease infinite;
+  }
+
+  /* HOME SECTION */
+  .home-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* CONTENITORE PRINCIPALE BLOB */
+  .hero-blob-wrapper {
+    position: relative;
+    width: clamp(300px, 45vw, 600px);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* COLORI FERMI SULLO SFONDO */
+  .hero-blob-colors {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle at 30% 30%, #00d4ff, transparent 50%),
+                radial-gradient(circle at 70% 70%, #ff00ff, transparent 50%),
+                radial-gradient(circle at 50% 50%, #ff5e00, transparent 50%);
+    filter: blur(40px); 
+    opacity: 0.8;
+  }
+
+  /* VETRO CHE SI DEFORMA E SEGUE IL MOUSE */
+  .hero-blob-glass {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05), inset 0 0 20px rgba(255,255,255,0.4);
+    
+    /* Deformazione fluida del vetro */
+    animation: morphShape 8s ease-in-out infinite;
+    
+    /* Transizione per rendere il movimento del mouse morbidissimo */
+    transition: transform 0.8s cubic-bezier(0.1, 1, 0.3, 1);
+  }
+
+  /* SCROLL ARROW */
+  .scroll-down {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: #111111;
+    text-decoration: none;
+    font-family: "Helvetica Neue", sans-serif;
+    animation: bounce 2s infinite;
+    z-index: 10;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+    40% { transform: translateY(-15px) translateX(-50%); }
+    60% { transform: translateY(-7px) translateX(-50%); }
+  }
+
+  /* SEZIONE PROGETTI */
+  .page-type-section {
+    min-height: 100vh;
+    padding: 150px 5vw 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    border-top: 2px solid #111111;
+  }
+
+  /* LINK DEI PROGETTI (Reindirizzamento) */
+  .project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .project-item {
+    border-bottom: 2px solid #111111;
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    cursor: pointer;
+    transition: padding-left 0.4s ease, background-color 0.4s ease;
+  }
+
+  .project-link:hover .project-item {
+    padding-left: 30px;
+    background-color: #fcfcfc;
+  }
+
+  .project-number {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+    color: #888888;
+    width: 50px;
+  }
+
+  .project-title {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    flex-grow: 1;
+    transition: transform 0.4s ease;
+  }
+
+  .project-category {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Effetto Hover Liquido sul titolo del progetto */
+  .project-link:hover .project-title {
+    background: linear-gradient(90deg, #00d4ff, #ff00ff, #ff5e00, #00d4ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 3s ease infinite;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .project-item {
+      flex-direction: column;
+      gap: 10px;
+      padding: 20px 0;
+    }
+    .project-link:hover .project-item {
+      padding-left: 15px;
+    }
+    .project-category {
+      align-self: flex-start;
+      margin-left: 50px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="title-group">
+      <h1>SIMONE CAPUTO</h1>
+    </div>
+    
+    <div class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+    <nav class="menu-overlay" id="menuOverlay">
+    <a href="#home" class="menu-link liquid-hover-effect">HOME</a>
+    <a href="#projects" class="menu-link liquid-hover-effect">PORTFOLIO</a>
+    <a href="about.html" class="menu-link liquid-hover-effect">PROFILE</a>
+    <a href="contact.html" class="menu-link liquid-hover-effect">CONTACT</a>
+  </nav>
+
+  <section class="home-section" id="home">
+    
+    <div class="hero-blob-wrapper">
+      <div class="hero-blob-colors"></div>
+      <div class="hero-blob-glass" id="glassBlob"></div>
+    </div>
+    
+    <a href="#projects" class="scroll-down">&darr;</a>
+  </section>
+
+  <section class="page-type-section" id="projects">
+    
+    <div class="projects-list">
+      <a href="trame-dettaglio.html" class="project-link">
+        <div class="project-item">
+          <span class="project-number">01</span>
+          <h2 class="project-title">Trame del Dettaglio</h2>
+          <span class="project-category">Exhibition / 3D</span>
+        </div>
+      </a>
+      
+      <a href="bagnoli-waterfront.html" class="project-link">
+        <div class="project-item">
+          <span class="project-number">02</span>
+          <h2 class="project-title">Bagnoli Waterfront</h2>
+          <span class="project-category">Urban / Architecture</span>
+        </div>
+      </a>
+      
+      <a href="urban-vfx.html" class="project-link">
+        <div class="project-item">
+          <span class="project-number">03</span>
+          <h2 class="project-title">Urban Integrations</h2>
+          <span class="project-category">VFX / FOOH</span>
+        </div>
+      </a>
+
+      <a href="sports-hub.html" class="project-link">
+        <div class="project-item">
+          <span class="project-number">04</span>
+          <h2 class="project-title">Sports Hub</h2>
+          <span class="project-category">Public Space</span>
+        </div>
+      </a>
+    </div>
+
+  </section>
+
+  <script>
+    // 1. LOGICA MENU HAMBURGER E CHIUSURA AUTOMATICA
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const spans = hamburgerBtn.querySelectorAll('span');
+    const menuLinks = document.querySelectorAll('.menu-link'); // Ora seleziona i link
+
+    function toggleMenu() {
+      menuOverlay.classList.toggle('active');
+      if (menuOverlay.classList.contains('active')) {
+        spans[0].style.transform = 'translateY(13px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-13px) rotate(-45deg)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    }
+
+    hamburgerBtn.addEventListener('click', toggleMenu);
+
+    // Fa chiudere il menu in automatico quando clicchi una voce
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(menuOverlay.classList.contains('active')) {
+          toggleMenu();
+        }
+      });
+    });
+
+    // 2. LOGICA MOVIMENTO MOUSE (Solo per il vetro)
+    const glassBlob = document.getElementById('glassBlob');
+    
+    document.addEventListener('mousemove', (e) => {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 10;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 10;
+      glassBlob.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
+    });
+  </script>
+</body>
+</html>
