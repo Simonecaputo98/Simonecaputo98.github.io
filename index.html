@@ -39,7 +39,6 @@
     color: #333333;
   }
 
-  /* LIQUID ANIMATIONS */
   @keyframes gradientFlow {
     0%   { background-position: 0% 50%; }
     50%  { background-position: 100% 50%; }
@@ -61,7 +60,7 @@
     pointer-events: none;
   }
 
-  .title-group {
+  .title-group, .hamburger {
     pointer-events: auto;
   }
 
@@ -69,7 +68,6 @@
     font-size: clamp(2rem, 4vw, 3.5rem);
   }
 
-  /* HAMBURGER MENU */
   .hamburger {
     cursor: pointer;
     display: flex;
@@ -77,7 +75,6 @@
     gap: 8px;
     z-index: 102;
     margin-top: 5px;
-    pointer-events: auto;
   }
 
   .hamburger span {
@@ -88,7 +85,7 @@
     transition: all 0.3s ease;
   }
 
-  /* FULL SCREEN MENU OVERLAY */
+  /* MENU OVERLAY */
   .menu-overlay {
     position: fixed;
     top: 0;
@@ -112,7 +109,6 @@
     visibility: visible;
   }
 
-  /* HOVER LIQUIDO SUI TESTI */
   .menu-link {
     font-size: clamp(3rem, 8vw, 6rem);
     color: #111111;
@@ -123,7 +119,7 @@
 
   .liquid-hover-effect:hover {
     transform: translateX(30px);
-    background: linear-gradient(90deg, #00d4ff, #ff00ff, #ff5e00, #00d4ff);
+    background: linear-gradient(90deg, #ddff00, #ff0000, #ff5e00, #00d4ff);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -133,66 +129,63 @@
   /* HOME SECTION */
   .home-section {
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
     overflow: hidden;
-  }
-
-  /* CONTENITORE PRINCIPALE BLOB */
-  .hero-blob-wrapper {
-    position: relative;
-    width: clamp(300px, 45vw, 600px);
-    aspect-ratio: 1 / 1;
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  /* COLORI FERMI SULLO SFONDO */
-  .hero-blob-colors {
+  /* MACCHIE DI COLORE SFOCATO SULLO SFONDO */
+  .hero-colors-wrapper {
     position: absolute;
-    width: 80%;
-    height: 80%;
-    background: radial-gradient(circle at 30% 30%, #00d4ff, transparent 50%),
-                radial-gradient(circle at 70% 70%, #ff00ff, transparent 50%),
-                radial-gradient(circle at 50% 50%, #ff5e00, transparent 50%);
-    filter: blur(40px); 
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .color-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
     opacity: 0.8;
   }
 
-  /* EFFETTO LIQUIDO AVANZATO - STILI CSS */
-  #gooey-wrapper {
+  .color-cyan { width: 45vw; height: 45vw; background: #fffb00; top: 10%; left: 20%; }
+  .color-magenta { width: 40vw; height: 40vw; background: #ff0000; bottom: 10%; right: 15%; }
+  .color-orange { width: 35vw; height: 35vw; background: #ff5e00; top: 40%; left: 45%; }
+
+  /* VETRO ORGANICO CHE SI DEFORMA DA SOLO */
+  .glass-morph {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2; /* Sopra i colori ma sotto l'interfaccia */
+    width: clamp(300px, 45vw, 600px);
+    aspect-ratio: 1 / 1;
+    z-index: 2;
     
-    /* Applica il filtro SVG per fusione e aberrazione cromatica */
-    filter: url(#advancedLiquidEffect);
-    /* Crea la rifrazione generale */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* Effetto Vetro trasparente */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08), inset 0 0 20px rgba(255,255,255,0.5);
+    
+    /* Animazione Morphing automatica */
+    animation: morphShape 12s ease-in-out infinite;
+    
+    /* Transizione fluida per quando insegue il mouse */
+    transition: transform 0.3s cubic-bezier(0.1, 1, 0.3, 1);
   }
 
-  .gooey-blob {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    /* Bianco semi-trasparente per simulare il volume del fluido */
-    background: rgba(255, 255, 255, 0.7);
-    transform-origin: center center;
-    will-change: transform;
+  /* L'animazione che cambia il raggio dei bordi creando la forma liquida */
+  @keyframes morphShape {
+    0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
   }
-
-  #blob1 { width: 60%; aspect-ratio: 1/1; }
-  #blob2 { width: 40%; aspect-ratio: 1/1; }
-  #blob3 { width: 25%; aspect-ratio: 1/1; }
 
   /* SCROLL ARROW */
   .scroll-down {
@@ -231,7 +224,6 @@
     border-top: 2px solid #111111;
   }
 
-  /* LINK DEI PROGETTI (Reindirizzamento) */
   .project-link {
     text-decoration: none;
     color: inherit;
@@ -274,7 +266,6 @@
     letter-spacing: 0.1em;
   }
 
-  /* Effetto Hover Liquido sul titolo del progetto */
   .project-link:hover .project-title {
     background: linear-gradient(90deg, #00d4ff, #ff00ff, #ff5e00, #00d4ff);
     background-size: 300% 300%;
@@ -283,20 +274,14 @@
     animation: gradientFlow 3s ease infinite;
   }
 
-  /* RESPONSIVE */
   @media (max-width: 768px) {
-    .project-item {
-      flex-direction: column;
-      gap: 10px;
-      padding: 20px 0;
-    }
-    .project-link:hover .project-item {
-      padding-left: 15px;
-    }
-    .project-category {
-      align-self: flex-start;
-      margin-left: 50px;
-    }
+    .project-item { flex-direction: column; gap: 10px; padding: 20px 0; }
+    .project-link:hover .project-item { padding-left: 15px; }
+    .project-category { align-self: flex-start; margin-left: 50px; }
+    
+    .color-cyan { width: 70vw; height: 70vw; }
+    .color-magenta { width: 70vw; height: 70vw; }
+    .color-orange { width: 60vw; height: 60vw; }
   }
 </style>
 </head>
@@ -308,13 +293,11 @@
     </div>
     
     <div class="hamburger" id="hamburgerBtn">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
   </header>
 
-    <nav class="menu-overlay" id="menuOverlay">
+  <nav class="menu-overlay" id="menuOverlay">
     <a href="#home" class="menu-link liquid-hover-effect">HOME</a>
     <a href="#projects" class="menu-link liquid-hover-effect">PORTFOLIO</a>
     <a href="about.html" class="menu-link liquid-hover-effect">PROFILE</a>
@@ -323,38 +306,13 @@
 
   <section class="home-section" id="home">
     
-    <div class="hero-blob-wrapper">
-      <div class="hero-blob-colors"></div>
-      
-      <div id="gooey-wrapper">
-        <div class="gooey-blob" id="blob1"></div>
-        <div class="gooey-blob" id="blob2"></div>
-        <div class="gooey-blob" id="blob3"></div>
-      </div>
-
-      <svg width="0" height="0" style="position: absolute; visibility: hidden;">
-        <filter id="advancedLiquidEffect">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blurredBlobs"/>
-          
-          <feColorMatrix in="blurredBlobs" type="matrix" values="
-            1  0  0  0   0
-            0  1  0  0   0
-            0  0  1  0   0
-            0  0  0  30  -15" result="gooeyFusion"/>
-          
-          <feColorMatrix type="matrix" values="
-            1.2  0    0   0   -5
-            0    1    0   0   -5
-            0    0    1.2 0   -5
-            0    0    0   1   0" result="fringedGooey"/>
-            
-          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="1" result="distortionNoise">
-            <animate attributeName="baseFrequency" values="0.02;0.025;0.02" dur="10s" repeatCount="indefinite" />
-          </feTurbulence>
-          <feDisplacementMap in="fringedGooey" in2="distortionNoise" scale="25" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-      </svg>
+    <div class="hero-colors-wrapper">
+      <div class="color-blob color-cyan"></div>
+      <div class="color-blob color-magenta"></div>
+      <div class="color-blob color-orange"></div>
     </div>
+
+    <div class="glass-morph" id="glassBlob"></div>
     
     <a href="#projects" class="scroll-down">&darr;</a>
   </section>
@@ -398,7 +356,7 @@
   </section>
 
   <script>
-    // 1. LOGICA MENU HAMBURGER E CHIUSURA AUTOMATICA
+    // 1. LOGICA MENU HAMBURGER
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const menuOverlay = document.getElementById('menuOverlay');
     const spans = hamburgerBtn.querySelectorAll('span');
@@ -421,59 +379,21 @@
 
     menuLinks.forEach(link => {
       link.addEventListener('click', () => {
-        if(menuOverlay.classList.contains('active')) {
-          toggleMenu();
-        }
+        if(menuOverlay.classList.contains('active')) toggleMenu();
       });
     });
 
-    // 2. LOGICA MOVIMENTO MULTIPLO EFFETTO LIQUIDO
-    const gooeyWrapper = document.getElementById('gooey-wrapper');
-    const blobs = document.querySelectorAll('.gooey-blob');
-    
-    // Inizializza posizioni
-    const mouse = { x: 0, y: 0 };
-    let coreX = 0, coreY = 0;
-    let targetX = 0, targetY = 0;
+    // 2. PARALLASSE DEL VETRO AL PASSAGGIO DEL MOUSE
+    const glassBlob = document.getElementById('glassBlob');
     
     document.addEventListener('mousemove', (e) => {
-      // Effetto di parallasse inverso morbido come avevamo prima
-      targetX = (window.innerWidth / 2 - e.pageX) / 8;
-      targetY = (window.innerHeight / 2 - e.pageY) / 8;
+      // Calcola la distanza dal centro dello schermo
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 15;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 15;
+      
+      // Sposta il vetro in direzione opposta creando profondità (parallasse)
+      glassBlob.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
     });
-    
-    // Funzione per ritardo organico
-    function organicLag(current, target, rate = 0.1) {
-      return current + (target - current) * rate;
-    }
-    
-    function updateLiquid() {
-      // Il nucleo centrale insegue il mouse
-      coreX = organicLag(coreX, targetX, 0.08);
-      coreY = organicLag(coreY, targetY, 0.08);
-      
-      // I singoli blob si muovono attorno al nucleo con ritardi e scale diverse
-      blobs.forEach((blob, index) => {
-        const lagRate = 0.04 + index * 0.015;
-        blob.posX = organicLag(blob.posX || 0, coreX, lagRate);
-        blob.posY = organicLag(blob.posY || 0, coreY, lagRate);
-        
-        const scaleRate = 0.01 + index * 0.005;
-        const targetScale = 1 + index * 0.15;
-        blob.currentScale = organicLag(blob.currentScale || 1, targetScale, scaleRate);
-        
-        // Traduciamo i valori in posizioni CSS (partendo dal centro -50%, -50%)
-        // Moltiplichiamo il movimento di ogni blob per creare separazione
-        const offsetX = (blob.posX - coreX) * (1.5 + index);
-        const offsetY = (blob.posY - coreY) * (1.5 + index);
-        
-        blob.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${blob.currentScale})`;
-      });
-      
-      requestAnimationFrame(updateLiquid);
-    }
-    
-    updateLiquid();
   </script>
 </body>
 </html>
