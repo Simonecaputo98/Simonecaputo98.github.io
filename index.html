@@ -4,6 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simone Caputo - Architectural & 3D Designer</title>
+
+<meta name="description" content="Portfolio di Simone Caputo, architetto e 3D designer con base in Italia. Specializzato in urban design, product design, simulazioni fisiche e VFX.">
+
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+
+<meta property="og:title" content="Simone Caputo - Architectural & 3D Designer">
+<meta property="og:description" content="Portfolio ufficiale di Simone Caputo. Progetti di architettura, product design, simulazioni 3D e VFX.">
+<meta property="og:image" content="https://simonecaputo.it/images/preview.jpg">
+<meta property="og:url" content="https://simonecaputo.it">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
 <style>
   /* RESET & BASE STYLES */
   * {
@@ -325,6 +344,24 @@
     animation: gradientFlow 3s ease infinite;
   }
 
+  /* MINIMAL FOOTER */
+  .site-footer {
+    width: 100%;
+    padding: 40px 5vw 60px;
+    border-top: 1px solid #eeeeee;
+    background-color: #ffffff;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    color: #888888;
+    text-align: center;
+  }
+
   @media (max-width: 768px) {
     .project-item { flex-direction: column; gap: 10px; padding: 20px 0; }
     .project-link:hover .project-item { padding-left: 15px; }
@@ -457,6 +494,12 @@
     </div>
 
   </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>&copy; 2026 Simone Caputo. All rights reserved.</span>
+    </div>
+  </footer>
 
   <script>
     // 1. LOGICA MENU HAMBURGER
