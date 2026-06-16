@@ -180,7 +180,6 @@
     transition: transform 0.3s cubic-bezier(0.1, 1, 0.3, 1);
   }
 
-  /* L'animazione che cambia il raggio dei bordi creando la forma liquida */
   @keyframes morphShape {
     0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
     50%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
@@ -207,21 +206,73 @@
     60% { transform: translateY(-7px) translateX(-50%); }
   }
 
-  /* SEZIONE PROGETTI */
+  /* SEZIONE PROGETTI E CATEGORIE ACCORDION */
   .page-type-section {
     min-height: 100vh;
     padding: 150px 5vw 100px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
+  .category-block {
+    margin-bottom: 40px;
+    width: 100%;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    border-bottom: 2px solid #111111;
+    padding-bottom: 15px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .category-index {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.2rem;
+    color: #111111;
+    font-weight: bold;
+  }
+
+  .category-title {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    letter-spacing: 0.05em;
+  }
+
+  /* Indicatore di apertura/chiusura minimalista */
+  .category-icon {
+    margin-left: auto;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* STILE LISTA PROGETTI A COMPARSA */
   .projects-list {
     display: flex;
     flex-direction: column;
     list-style: none;
     width: 100%;
-    border-top: 2px solid #111111;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  }
+
+  /* STATO ATTIVO: Quando la categoria viene cliccata ed espansa */
+  .category-block.active .projects-list {
+    max-height: 1000px;
+    opacity: 1;
+    padding-top: 10px;
+  }
+
+  .category-block.active .category-icon {
+    transform: rotate(45deg);
   }
 
   .project-link {
@@ -231,8 +282,8 @@
   }
 
   .project-item {
-    border-bottom: 2px solid #111111;
-    padding: 30px 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 25px 0;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -253,7 +304,7 @@
   }
 
   .project-title {
-    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-size: clamp(1.8rem, 4vw, 3.5rem);
     flex-grow: 1;
     transition: transform 0.4s ease;
   }
@@ -319,38 +370,90 @@
 
   <section class="page-type-section" id="projects">
     
-    <div class="projects-list">
-      <a href="trame-dettaglio.html" class="project-link">
-        <div class="project-item">
-          <span class="project-number">01</span>
-          <h2 class="project-title">Trame del Dettaglio</h2>
-          <span class="project-category">Exhibition / 3D</span>
-        </div>
-      </a>
+    <div class="category-block">
+      <div class="category-header">
+        <span class="category-index">01</span>
+        <h2 class="category-title">ARCHITECTURE</h2>
+        <span class="category-icon">+</span>
+      </div>
       
-      <a href="bagnoli-waterfront.html" class="project-link">
-        <div class="project-item">
-          <span class="project-number">02</span>
-          <h2 class="project-title">Bagnoli Waterfront</h2>
-          <span class="project-category">Urban / Architecture</span>
-        </div>
-      </a>
-      
-      <a href="urban-vfx.html" class="project-link">
-        <div class="project-item">
-          <span class="project-number">03</span>
-          <h2 class="project-title">Urban Integrations</h2>
-          <span class="project-category">VFX / FOOH</span>
-        </div>
-      </a>
+      <div class="projects-list">
+        <a href="bagnoli-waterfront.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">A.1</span>
+            <h2 class="project-title">Bagnoli Waterfront</h2>
+            <span class="project-category">Urban / Architecture</span>
+          </div>
+        </a>
+        
+        <a href="sports-hub.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">A.2</span>
+            <h2 class="project-title">Sports Hub</h2>
+            <span class="project-category">Public Space</span>
+          </div>
+        </a>
 
-      <a href="sports-hub.html" class="project-link">
-        <div class="project-item">
-          <span class="project-number">04</span>
-          <h2 class="project-title">Sports Hub</h2>
-          <span class="project-category">Public Space</span>
-        </div>
-      </a>
+        <a href="trame-dettaglio.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">A.3</span>
+            <h2 class="project-title">Trame del Dettaglio</h2>
+            <span class="project-category">Exhibition / 3D</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="category-block">
+      <div class="category-header">
+        <span class="category-index">02</span>
+        <h2 class="category-title">DESIGN</h2>
+        <span class="category-icon">+</span>
+      </div>
+      
+      <div class="projects-list">
+        <a href="svuotatasche-marmo.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">D.1</span>
+            <h2 class="project-title">Svuotatasche in Marmo</h2>
+            <span class="project-category">Product Design</span>
+          </div>
+        </a>
+
+        <a href="lampada-prototipo.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">D.2</span>
+            <h2 class="project-title">Prototipo Lampada</h2>
+            <span class="project-category">Lighting Design</span>
+          </div>
+        </a>
+
+        <a href="zero-sostanze.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">D.3</span>
+            <h2 class="project-title">Campagna Zero Sostanze</h2>
+            <span class="project-category">Logo / Identity</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="category-block">
+      <div class="category-header">
+        <span class="category-index">03</span>
+        <h2 class="category-title">VFX & CGI</h2>
+        <span class="category-icon">+</span>
+      </div>
+      
+      <div class="projects-list">
+        <a href="urban-vfx.html" class="project-link">
+          <div class="project-item">
+            <span class="project-number">V.1</span>
+            <h2 class="project-title">Urban Integrations</h2>
+            <span class="project-category">FOOH / Motion Tracking</span>
+          </div>
+        </a>
+      </div>
     </div>
 
   </section>
@@ -387,12 +490,26 @@
     const glassBlob = document.getElementById('glassBlob');
     
     document.addEventListener('mousemove', (e) => {
-      // Calcola la distanza dal centro dello schermo
       const xAxis = (window.innerWidth / 2 - e.pageX) / 15;
       const yAxis = (window.innerHeight / 2 - e.pageY) / 15;
-      
-      // Sposta il vetro in direzione opposta creando profondità (parallasse)
       glassBlob.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
+    });
+
+    // 3. LOGICA INTERATTIVA ACCORDION (A COMPARSA)
+    const categoryHeaders = document.querySelectorAll('.category-header');
+
+    categoryHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const currentBlock = header.parentElement;
+        
+        document.querySelectorAll('.category-block').forEach(block => {
+          if (block !== currentBlock) {
+            block.classList.remove('active');
+          }
+        });
+
+        currentBlock.classList.toggle('active');
+      });
     });
   </script>
 </body>
