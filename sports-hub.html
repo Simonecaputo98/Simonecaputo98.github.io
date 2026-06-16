@@ -195,6 +195,291 @@
   .image-container.square { 
     aspect-ratio: 1 / 1; 
   }
+
+  /* Stile dedicato per il render verticale */
+  .image-container.portrait { 
+    aspect-ratio: 3 / 4; 
+    max-width: 800px; 
+    margin: 0 auto; 
+  }
+  
+  .image-container img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+  }
+
+  /* PROJECT DESCRIPTION IN BOTTOM */
+  .project-description-section { 
+    padding: 20px 5vw 120px; 
+    border-top: 1px solid #eeeeee; 
+    margin-top: 20px; 
+  }
+  
+  .project-description { 
+    display: grid; 
+    grid-template-columns: 1fr 2fr; 
+    gap: 60px; 
+    align-items: start; 
+    margin-top: 60px; 
+  }
+  
+  .desc-title { 
+    font-size: 2rem; 
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) { 
+    .project-description { grid-template-columns: 1fr; gap: 30px; } 
+    .gallery-row.two-columns { grid-template-columns: 1fr; } 
+    .project-meta { gap: 20px; flex-direction: column; } 
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="title-group">
+      <a href="index.html" class="back-link">
+        <h1>&larr; SIMONE CAPUTO</h1>
+      </a>
+    </div>
+    
+    <div class="hamburger" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <nav class="menu-overlay" id="menuOverlay">
+    <a href="index.html" class="menu-link liquid-hover-effect">HOME</a>
+    <a href="index.html#projects" class="menu-link liquid-hover-effect">PORTFOLIO</a>
+    <a href="about.html" class="menu-link liquid-hover-effect">PROFILE</a>
+    <a href="contact.html" class="menu-link liquid-hover-effect">CONTACT</a>
+  </nav>
+
+  <section class="project-header">
+    <div class="project-meta">
+      <span>Public Space / Architecture</span>
+      <span>Naples, Italy &mdash; 2022</span>
+      <span>AutoCAD / ArchiCAD / Blender</span>
+    </div>
+    <h2 class="project-title-large">BAGNOLI<br>SPORTS HUB</h2>
+  </section>
+
+  <section class="project-gallery">
+    
+    <div class="gallery-row">
+      <div class="image-container landscape">
+        <img src="images/RENDER ORIZ BAGNOLI.png" alt="Render Orizzontale Bagnoli Sports Hub">
+      </div>
+    </div>
+
+    <div class="gallery-row two-columns">
+      <div class="image-container square">
+        <img src="images/PLANIMETRIA BAGNOLI.png" alt="Planimetria Bagnoli Sports Hub">
+      </div>
+      <div class="image-container square">
+        <img src="images/SPACCATO BAGNOLI.png" alt="Spaccato Architettonico Bagnoli Sports Hub">
+      </div>
+    </div>
+
+    <div class="gallery-row">
+      <div class="image-container portrait">
+        <img src="images/RENDER V BAGNOLI.png" alt="Render Verticale Bagnoli Sports Hub">
+      </div>
+    </div>
+
+  </section>
+
+  <section class="project-description-section">
+    <div class="project-description">
+      <h3 class="desc-title">PUBLIC<br>SPACE</h3>
+      <p>
+        Designed as a new architectural landmark within the former NATO base in Naples, this sports complex replaces a dilapidated structure to actively regenerate the surrounding urban context. The main building volume features a distinctive curved wall that dialogues fluidly with the local morphology. The architectural program includes an indoor gym, a 5-a-side football pitch, and outdoor basketball courts, all characterized by open, light-filled spaces designed to maximize visual and spatial connection with the surrounding landscape.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const spans = hamburgerBtn.querySelectorAll('span');
+
+    hamburgerBtn.addEventListener('click', () => {
+      menuOverlay.classList.toggle('active');
+      if (menuOverlay.classList.contains('active')) {
+        spans[0].style.transform = 'translateY(13px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-13px) rotate(-45deg)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+  </script>
+</body>
+</html>    line-height: 1.6; 
+    color: #333333; 
+    max-width: 800px; 
+  }
+
+  /* HEADER & MENU */
+  header { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    padding: 40px 5vw; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    z-index: 100; 
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 60%, rgba(255,255,255,0)); 
+    pointer-events: none; 
+  }
+  
+  .title-group, .hamburger { 
+    pointer-events: auto; 
+  }
+  
+  .title-group h1 { 
+    font-size: clamp(1.5rem, 3vw, 2.5rem); 
+  }
+  
+  .back-link { 
+    text-decoration: none; 
+    color: #111111; 
+    display: inline-block; 
+    transition: transform 0.3s ease; 
+  }
+  
+  .back-link:hover { 
+    transform: translateX(-10px); 
+  }
+
+  .hamburger { 
+    cursor: pointer; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    margin-top: 5px; 
+  }
+  
+  .hamburger span { 
+    display: block; 
+    width: 45px; 
+    height: 5px; 
+    background-color: #111111; 
+    transition: all 0.3s ease; 
+  }
+
+  .menu-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: #ffffff; 
+    z-index: 101; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: flex-start; 
+    padding-left: 10vw; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.4s ease, visibility 0.4s; 
+  }
+  
+  .menu-overlay.active { 
+    opacity: 1; 
+    visibility: visible; 
+  }
+  
+  .menu-link { 
+    font-size: clamp(3rem, 8vw, 6rem); 
+    color: #111111; 
+    text-decoration: none; 
+    margin: 15px 0; 
+    transition: transform 0.4s ease; 
+  }
+
+  @keyframes gradientFlow { 
+    0% { background-position: 0% 50%; } 
+    50% { background-position: 100% 50%; } 
+    100% { background-position: 0% 50%; } 
+  }
+  
+  .liquid-hover-effect:hover { 
+    transform: translateX(30px); 
+    background: linear-gradient(90deg, #00d4ff, #ff00ff, #ff5e00, #00d4ff); 
+    background-size: 300% 300%; 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    animation: gradientFlow 3s ease infinite; 
+  }
+
+  /* PROJECT HEADER */
+  .project-header { 
+    padding: 180px 5vw 40px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 30px; 
+  }
+  
+  .project-meta { 
+    font-family: "JetBrains Mono", monospace; 
+    font-size: 1rem; 
+    color: #888888; 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
+    display: flex; 
+    gap: 40px; 
+    flex-wrap: wrap; 
+  }
+  
+  .project-title-large { 
+    font-size: clamp(3rem, 7vw, 6rem); 
+    line-height: 0.9; 
+  }
+
+  /* PROJECT GALLERY */
+  .project-gallery { 
+    padding: 20px 5vw 60px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 60px; 
+  }
+  
+  .gallery-row { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 40px; 
+  }
+  
+  .gallery-row.two-columns { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+  
+  /* IMMAGINI RIGOROSAMENTE SENZA BORDO */
+  .image-container { 
+    width: 100%; 
+    background-color: #f4f4f4; 
+    border: none; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+  }
+  
+  .image-container.landscape { 
+    aspect-ratio: 16 / 9; 
+  }
+  
+  .image-container.square { 
+    aspect-ratio: 1 / 1; 
+  }
   
   .image-container img { 
     width: 100%; 
