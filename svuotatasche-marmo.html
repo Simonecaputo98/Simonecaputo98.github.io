@@ -229,21 +229,12 @@
 
   .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     font-family: "JetBrains Mono", monospace;
     font-size: 0.8rem;
     color: #888888;
-  }
-
-  .footer-link {
-    color: #888888;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .footer-link:hover {
-    color: #111111;
+    text-align: center;
   }
 
   /* RESPONSIVE */
@@ -251,7 +242,6 @@
     .project-description { grid-template-columns: 1fr; gap: 30px; } 
     .gallery-row.two-columns { grid-template-columns: 1fr; } 
     .project-meta { gap: 20px; flex-direction: column; } 
-    .footer-content { flex-direction: column; align-items: flex-start; gap: 15px; }
   }
 </style>
 </head>
@@ -324,8 +314,7 @@
 
   <footer class="site-footer">
     <div class="footer-content">
-      <span>&copy; 2026 Simone Caputo.</span>
-      <a href="https://www.linkedin.com/in/tuoprofilo/" target="_blank" class="footer-link">LinkedIn</a>
+      <span>&copy; 2026 Simone Caputo. All rights reserved.</span>
     </div>
   </footer>
 
