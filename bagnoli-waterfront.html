@@ -53,13 +53,17 @@
   .gallery-row.two-columns { grid-template-columns: repeat(2, 1fr); }
   
   /* IMMAGINI LIBERATE (Senza bordo, sfondo o proporzioni forzate) */
-  .image-container { width: 100%; background-color: transparent; border: none; display: flex; justify-content: center; align-items: center; }
+  .image-container { width: 100%; background-color: transparent; border: none; display: flex; justify-content: center; align-items: flex-start; }
   .image-container img { width: 100%; height: auto; display: block; }
 
   /* PROJECT DESCRIPTION */
   .project-description-section { padding: 20px 5vw 120px; border-top: 1px solid #eeeeee; margin-top: 20px; }
   .project-description { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: start; margin-top: 60px; }
   .desc-title { font-size: 2rem; }
+
+  /* MINIMAL FOOTER */
+  .site-footer { width: 100%; padding: 40px 5vw 60px; border-top: 1px solid #eeeeee; }
+  .footer-content { display: flex; justify-content: center; align-items: center; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: #888888; text-align: center; }
 
   @media (max-width: 768px) { .project-description { grid-template-columns: 1fr; gap: 30px; } .gallery-row.two-columns { grid-template-columns: 1fr; } .project-meta { gap: 20px; flex-direction: column; } }
 </style>
@@ -96,30 +100,28 @@
 
   <section class="project-gallery">
     
+    <!-- Riga 1: Masterplan intero -->
     <div class="gallery-row">
       <div class="image-container">
         <img src="images/Screenshot 2026-06-15 alle 16.09.25.png" alt="Masterplan Aerial View">
       </div>
     </div>
 
+    <!-- Riga 2: Due immagini affiancate -->
     <div class="gallery-row two-columns">
       <div class="image-container">
         <img src="images/Screenshot 2026-06-15 alle 16.09.39.png" alt="Solar & Wind Analysis">
       </div>
-
-
-      <div class="gallery-row two-columns">
       <div class="image-container">
-        <img src="images/Screenshot 2026-06-15 alle 16.10.13.png" alt="Solar & Wind Analysis">
+        <img src="images/Screenshot 2026-06-15 alle 16.10.13.png" alt="Solar & Wind Analysis 2">
       </div>
+    </div>
 
-
-         <div class="gallery-row two-columns">
+    <!-- Riga 3: Altre due immagini affiancate -->
+    <div class="gallery-row two-columns">
       <div class="image-container">
-        <img src="images/Screenshot 2026-06-15 alle 16.10.04.png" alt="Solar & Wind Analysis">
+        <img src="images/Screenshot 2026-06-15 alle 16.10.04.png" alt="Solar & Wind Analysis 3">
       </div>
-      
-
       <div class="image-container">
         <img src="images/Screenshot 2026-06-15 alle 16.05.03.png" alt="Community Gardens View">
       </div>
@@ -135,6 +137,12 @@
       </p>
     </div>
   </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>&copy; 2026 Simone Caputo. All rights reserved.</span>
+    </div>
+  </footer>
 
   <script>
     const hamburgerBtn = document.getElementById('hamburgerBtn');
