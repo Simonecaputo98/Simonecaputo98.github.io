@@ -5,16 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simone Caputo - Architectural & 3D Designer</title>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V06WVS48YR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<!-- Start cookieyes banner --> 
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/41de0ffe5c180e388dd7179283805d80/script.js"></script> 
+<!-- End cookieyes banner -->
 
-  gtag('config', 'G-V06WVS48YR');
-</script>
-  
 <meta name="description" content="Portfolio di Simone Caputo, architetto e 3D designer con base in Italia. Specializzato in urban design, product design, simulazioni fisiche e VFX.">
 
 <link rel="icon" type="image/png" href="images/favicon.png">
@@ -24,14 +18,6 @@
 <meta property="og:description" content="Portfolio ufficiale di Simone Caputo. Progetti di architettura, product design, simulazioni 3D e VFX.">
 <meta property="og:image" content="https://simonecaputo.it/images/preview.jpg">
 <meta property="og:url" content="https://simonecaputo.it">
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
 
 <style>
   /* RESET & BASE STYLES */
@@ -166,7 +152,6 @@
     align-items: center;
   }
 
-  /* MACCHIE DI COLORE SFOCATO SULLO SFONDO */
   .hero-colors-wrapper {
     position: absolute;
     width: 100%;
@@ -188,24 +173,17 @@
   .color-magenta { width: 40vw; height: 40vw; background: #ff0000; bottom: 10%; right: 15%; }
   .color-orange { width: 35vw; height: 35vw; background: #ff5e00; top: 40%; left: 45%; }
 
-  /* VETRO ORGANICO CHE SI DEFORMA DA SOLO */
   .glass-morph {
     position: absolute;
     width: clamp(300px, 45vw, 600px);
     aspect-ratio: 1 / 1;
     z-index: 2;
-    
-    /* Effetto Vetro trasparente */
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 30px 60px rgba(0,0,0,0.08), inset 0 0 20px rgba(255,255,255,0.5);
-    
-    /* Animazione Morphing automatica */
     animation: morphShape 12s ease-in-out infinite;
-    
-    /* Transizione fluida per quando insegue il mouse */
     transition: transform 0.3s cubic-bezier(0.1, 1, 0.3, 1);
   }
 
@@ -215,7 +193,6 @@
     100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
   }
 
-  /* SCROLL ARROW */
   .scroll-down {
     position: absolute;
     bottom: 40px;
@@ -235,7 +212,6 @@
     60% { transform: translateY(-7px) translateX(-50%); }
   }
 
-  /* SEZIONE PROGETTI E CATEGORIE ACCORDION */
   .page-type-section {
     min-height: 100vh;
     padding: 150px 5vw 100px;
@@ -271,7 +247,6 @@
     letter-spacing: 0.05em;
   }
 
-  /* Indicatore di apertura/chiusura minimalista */
   .category-icon {
     margin-left: auto;
     font-family: "JetBrains Mono", monospace;
@@ -281,7 +256,6 @@
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* STILE LISTA PROGETTI A COMPARSA */
   .projects-list {
     display: flex;
     flex-direction: column;
@@ -293,7 +267,6 @@
     transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
   }
 
-  /* STATO ATTIVO: Quando la categoria viene cliccata ed espansa */
   .category-block.active .projects-list {
     max-height: 1000px;
     opacity: 1;
@@ -354,7 +327,6 @@
     animation: gradientFlow 3s ease infinite;
   }
 
-  /* MINIMAL FOOTER */
   .site-footer {
     width: 100%;
     padding: 40px 5vw 60px;
@@ -376,7 +348,6 @@
     .project-item { flex-direction: column; gap: 10px; padding: 20px 0; }
     .project-link:hover .project-item { padding-left: 15px; }
     .project-category { align-self: flex-start; margin-left: 50px; }
-    
     .color-cyan { width: 70vw; height: 70vw; }
     .color-magenta { width: 70vw; height: 70vw; }
     .color-orange { width: 60vw; height: 60vw; }
@@ -512,7 +483,6 @@
   </footer>
 
   <script>
-    // 1. LOGICA MENU HAMBURGER
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const menuOverlay = document.getElementById('menuOverlay');
     const spans = hamburgerBtn.querySelectorAll('span');
@@ -539,28 +509,22 @@
       });
     });
 
-    // 2. PARALLASSE DEL VETRO AL PASSAGGIO DEL MOUSE
     const glassBlob = document.getElementById('glassBlob');
-    
     document.addEventListener('mousemove', (e) => {
       const xAxis = (window.innerWidth / 2 - e.pageX) / 15;
       const yAxis = (window.innerHeight / 2 - e.pageY) / 15;
       glassBlob.style.transform = `translate(${xAxis}px, ${yAxis}px)`;
     });
 
-    // 3. LOGICA INTERATTIVA ACCORDION (A COMPARSA)
     const categoryHeaders = document.querySelectorAll('.category-header');
-
     categoryHeaders.forEach(header => {
       header.addEventListener('click', () => {
         const currentBlock = header.parentElement;
-        
         document.querySelectorAll('.category-block').forEach(block => {
           if (block !== currentBlock) {
             block.classList.remove('active');
           }
         });
-
         currentBlock.classList.toggle('active');
       });
     });
